@@ -1,1 +1,1 @@
-java -jar infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
+web: java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dserver.port=$PORT -jar $PATH_TO_JAR
