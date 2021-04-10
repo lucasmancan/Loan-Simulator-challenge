@@ -11,9 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Parcela {
-    BigDecimal pagto;
-    BigDecimal juros;
-    BigDecimal amortizacao;
-    BigDecimal saldoDevedor;
-    LocalDate vencimento;
+    private BigDecimal pagto;
+    private BigDecimal juros;
+    private BigDecimal amortizacao;
+    private BigDecimal saldoDevedor;
+    private LocalDate vencimento;
 }
