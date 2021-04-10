@@ -1,1 +1,1 @@
-web: java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dserver.port=$PORT -jar $PATH_TO_JAR
+web: java -Dserver.port=$PORT -jar $PATH_TO_JAR
