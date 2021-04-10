@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar $PATH_TO_JAR
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar infrastructure/target/infrastructure-1.0-SNAPSHOT.jar
