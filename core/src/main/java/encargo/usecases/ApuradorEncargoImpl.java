@@ -9,11 +9,8 @@ import encargo.repositories.EncargoRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.lang.String.format;
 
 public class ApuradorEncargoImpl implements ApuradorEncargo {
 
@@ -58,28 +55,7 @@ public class ApuradorEncargoImpl implements ApuradorEncargo {
 
         LocalDate dataFinal = dataPrimeiroVencimento.plusMonths(prazoPagamento);
 
-        var chronoUnit = mapToChronoUnit(frequenciaRecorrencia);
-
-        return chronoUnit.between(dataPrimeiroVencimento, dataFinal);
-    }
-
-    private ChronoUnit mapToChronoUnit(FrequenciaRecorrencia frequenciaRecorrencia) {
-        ChronoUnit chronoUnit = null;
-
-        switch (frequenciaRecorrencia) {
-            case ANO:
-                chronoUnit = ChronoUnit.YEARS;
-                break;
-            case DIA:
-                chronoUnit = ChronoUnit.DAYS;
-                break;
-            case MES:
-                chronoUnit = ChronoUnit.MONTHS;
-                break;
-            default:
-                throw new IllegalArgumentException(format("There's no time unit equivalent to %s", frequenciaRecorrencia.name()));
-        }
-
-        return chronoUnit;
+        return frequenciaRecorrencia.toChronoUnit()
+                .between(dataPrimeiroVencimento, dataFinal);
     }
 }

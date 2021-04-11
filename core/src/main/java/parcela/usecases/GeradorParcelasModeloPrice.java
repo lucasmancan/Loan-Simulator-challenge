@@ -38,9 +38,9 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
 
         for (int i = 1; i <= simulacaoEmprestimo.getQuantidadeMeses(); i++) {
 
-            final BigDecimal vlJuros = calcularValorJuros(simulacaoEmprestimo.getTaxaJurosMes(), valor);
-            final BigDecimal vlAmortizacao = calcularValorAmortizacao(valorFixoPagamento, vlJuros);
-            final BigDecimal vlSaldoDevedor = calcularSaldoDevedor(valor, vlAmortizacao);
+            var vlJuros = calcularValorJuros(simulacaoEmprestimo.getTaxaJurosMes(), valor);
+            var vlAmortizacao = calcularValorAmortizacao(valorFixoPagamento, vlJuros);
+            var vlSaldoDevedor = calcularSaldoDevedor(valor, vlAmortizacao);
 
             var parcela = Parcela.builder()
                     .amortizacao(vlAmortizacao)
@@ -67,7 +67,6 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
     }
 
     private BigDecimal calcularValorJuros(BigDecimal taxaDeJuros, BigDecimal valorDevido) {
-        return valorDevido.multiply(taxaDeJuros
-                                    .divide(BigDecimal.valueOf(100)));
+        return valorDevido.multiply(taxaDeJuros.divide(BigDecimal.valueOf(100)));
     }
 }
