@@ -23,7 +23,7 @@ public class EmprestimoSimuladorImpl implements EmprestimoSimulador {
     public Emprestimo simular(SimulacaoEmprestimo simulacaoEmprestimo) {
 
         var emprestimo = new Emprestimo(simulacaoEmprestimo.getValorEmprestimo(),
-                simulacaoEmprestimo.getPrazo());
+                simulacaoEmprestimo.getQuantidadeMeses());
 
         var encargos = this.apuradorEncargo.apurar(simulacaoEmprestimo);
         var parcelas = this.geradorParcelas.gerarParcelas(simulacaoEmprestimo);
@@ -34,7 +34,7 @@ public class EmprestimoSimuladorImpl implements EmprestimoSimulador {
                 .orElse(BigDecimal.ZERO);
 
         var valorTotalParcelas = parcelas.stream()
-                .map(Parcela::getPagto)
+                .map(Parcela::getValor)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
 

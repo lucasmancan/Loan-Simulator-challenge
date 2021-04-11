@@ -3,14 +3,15 @@ package encargo.usecases;
 
 import common.SimulacaoEmprestimo;
 import encargo.Encargo;
+import encargo.EncargoEntity;
 import encargo.FrequenciaRecorrencia;
 import encargo.repositories.EncargoRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -24,25 +25,31 @@ public class ApuradorEncargoImpl implements ApuradorEncargo {
 
     @Override
     public List<Encargo> apurar(SimulacaoEmprestimo simulacaoEmprestimo) {
-        return encargoRepository
-                .buscarTaxasAtivas().stream().map(encargoEntity -> {
 
-                    BigDecimal valorFixo = simulacaoEmprestimo
-                            .getValorEmprestimo()
-                            .multiply(encargoEntity.getValorFixo());
+        var encargos = new ArrayList<Encargo>();
 
-                    long diferencaEntreDatas = calcularDiferencaEntreDatas(simulacaoEmprestimo.getPrimeiroVencimento(),
-                            simulacaoEmprestimo.getPrazo(),
-                            encargoEntity.getFrequenciaRecorrencia());
+        for(EncargoEntity encargoEntity: encargoRepository.buscarTaxasAtivas()){
 
-                    BigDecimal valorTotalRecorrente = encargoEntity.getValorRecorrente()
-                            .multiply(BigDecimal.valueOf(diferencaEntreDatas));
+            BigDecimal valorFixo = simulacaoEmprestimo
+                    .getValorEmprestimo()
+                    .multiply(encargoEntity.getValorPorcentagemFixa().divide(BigDecimal.valueOf(100L)));
 
-                    return Encargo.builder()
-                            .tipo(encargoEntity.getTipo())
-                            .valor(valorFixo.add(valorTotalRecorrente))
-                            .build();
-                }).collect(Collectors.toList());
+            long diferencaEntreDatas = calcularDiferencaEntreDatas(simulacaoEmprestimo.getPrimeiroVencimento(),
+                    simulacaoEmprestimo.getQuantidadeMeses(),
+                    encargoEntity.getFrequenciaRecorrencia());
+
+            BigDecimal valorTotalRecorrente = encargoEntity.getValorPorcentagemRecorrente()
+                    .multiply(BigDecimal.valueOf(diferencaEntreDatas))
+                    .divide(new BigDecimal(100))
+                    .multiply(simulacaoEmprestimo.getValorEmprestimo());
+
+            encargos.add(Encargo.builder()
+                    .tipo(encargoEntity.getTipo())
+                    .valor(valorFixo.add(valorTotalRecorrente))
+                    .build());
+        }
+
+        return encargos;
     }
 
     private long calcularDiferencaEntreDatas(LocalDate dataPrimeiroVencimento,
@@ -51,12 +58,12 @@ public class ApuradorEncargoImpl implements ApuradorEncargo {
 
         LocalDate dataFinal = dataPrimeiroVencimento.plusMonths(prazoPagamento);
 
-        var chronoUnit = fromFrequencytoChronoUnit(frequenciaRecorrencia);
+        var chronoUnit = mapToChronoUnit(frequenciaRecorrencia);
 
         return chronoUnit.between(dataPrimeiroVencimento, dataFinal);
     }
 
-    private ChronoUnit fromFrequencytoChronoUnit(FrequenciaRecorrencia frequenciaRecorrencia) {
+    private ChronoUnit mapToChronoUnit(FrequenciaRecorrencia frequenciaRecorrencia) {
         ChronoUnit chronoUnit = null;
 
         switch (frequenciaRecorrencia) {

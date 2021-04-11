@@ -29,16 +29,16 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
     @Override
     public List<Parcela> gerarParcelas(SimulacaoEmprestimo simulacaoEmprestimo) {
         BigDecimal valorFixoPagamento = calcularValorParcela(simulacaoEmprestimo.getValorEmprestimo(),
-                simulacaoEmprestimo.getTaxaJuros(),
-                simulacaoEmprestimo.getPrazo());
+                simulacaoEmprestimo.getTaxaJurosMes(),
+                simulacaoEmprestimo.getQuantidadeMeses());
 
         var parcelas = new ArrayList<Parcela>();
 
         var valor = simulacaoEmprestimo.getValorEmprestimo();
 
-        for (int i = 1; i <= simulacaoEmprestimo.getPrazo(); i++) {
+        for (int i = 1; i <= simulacaoEmprestimo.getQuantidadeMeses(); i++) {
 
-            final BigDecimal vlJuros = calcularValorJuros(simulacaoEmprestimo.getTaxaJuros(), valor);
+            final BigDecimal vlJuros = calcularValorJuros(simulacaoEmprestimo.getTaxaJurosMes(), valor);
             final BigDecimal vlAmortizacao = calcularValorAmortizacao(valorFixoPagamento, vlJuros);
             final BigDecimal vlSaldoDevedor = calcularSaldoDevedor(valor, vlAmortizacao);
 
@@ -46,8 +46,8 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
                     .amortizacao(vlAmortizacao)
                     .juros(vlJuros)
                     .saldoDevedor(vlSaldoDevedor)
-                    .pagto(valorFixoPagamento)
-                    .vencimento(simulacaoEmprestimo.getPrimeiroVencimento().plusMonths(i - 1))
+                    .valor(valorFixoPagamento)
+                    .venceEm(simulacaoEmprestimo.getPrimeiroVencimento().plusMonths(i - 1))
                     .build();
 
             parcelas.add(parcela);

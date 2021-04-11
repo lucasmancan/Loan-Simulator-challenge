@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Value
 public class SimulacaoEmprestimo {
     LocalDate primeiroVencimento;
-    BigDecimal taxaJuros;
+    BigDecimal taxaJurosMes;
     BigDecimal valorEmprestimo;
-    Integer prazo;
+    Integer quantidadeMeses;
 }

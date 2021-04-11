@@ -17,8 +17,8 @@ public class EncargoRepositoryImpl implements EncargoRepository {
         var entity = new EncargoEntity();
         entity.setTipo(EncargoTipo.IOF);
         entity.setFrequenciaRecorrencia(FrequenciaRecorrencia.DIA);
-        entity.setValorFixo(new BigDecimal("0.38"));
-        entity.setValorRecorrente(new BigDecimal("0.0082"));
+        entity.setValorPorcentagemFixa(new BigDecimal("0.38"));
+        entity.setValorPorcentagemRecorrente(new BigDecimal("0.0082"));
         return Arrays.asList(entity);
     }
 }

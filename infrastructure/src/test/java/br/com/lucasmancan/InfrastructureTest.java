@@ -33,9 +33,9 @@ class InfrastructureTest {
     void testItWorks() throws JsonProcessingException {
 
         SimulacaoEmprestimo simulacaoEmprestimo = SimulacaoEmprestimo.builder()
-                .prazo(12)
+                .quantidadeMeses(12)
                 .primeiroVencimento(LocalDate.now().plusMonths(1))
-                .taxaJuros(new BigDecimal("0.01"))
+                .taxaJurosMes(new BigDecimal("0.01"))
                 .valorEmprestimo(new BigDecimal(10000))
                 .build();
 
@@ -45,8 +45,8 @@ class InfrastructureTest {
 
         Assertions.assertTrue(application.isRunning());
         Assertions.assertEquals(0, emprestimo.getValorSolicitado().compareTo(simulacaoEmprestimo.getValorEmprestimo()));
-        Assertions.assertEquals(12, emprestimo.getPrazo());
-        Assertions.assertEquals(0, emprestimo.getValorTotal().compareTo(new BigDecimal("14464.85")));
+        Assertions.assertEquals(12, emprestimo.getQuantidadeMeses());
+        Assertions.assertEquals(0, emprestimo.getValorTotal().compareTo(new BigDecimal("10999.15")));
         Assertions.assertEquals(0, emprestimo.getValorJuros().compareTo(new BigDecimal("661.85")));
     }
 

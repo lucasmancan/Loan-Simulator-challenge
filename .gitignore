@@ -12,5 +12,5 @@ out/
 .settings
 .classpath
 .factorypath
-**/target/**
+*/target/*
 

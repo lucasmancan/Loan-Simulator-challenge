@@ -6,19 +6,24 @@ import common.SimulacaoEmprestimo;
 import javax.inject.Singleton;
 
 @Singleton
-public class SimulacaoConverter implements Converter<SimulacaoEmprestimo, Simulacao>{
+public class SimulacaoConverter implements Converter<SimulacaoEmprestimo, Simulacao> {
     @Override
     public SimulacaoEmprestimo toDomain(Simulacao data) {
         return SimulacaoEmprestimo.builder()
-                .prazo(data.getPrazo())
+                .quantidadeMeses(data.getQuantidadeMeses())
                 .primeiroVencimento(data.getPrimeiroVencimento())
                 .valorEmprestimo(data.getValorEmprestimo())
-                .taxaJuros(data.getTaxaJuros())
+                .taxaJurosMes(data.getTaxaJurosMes())
                 .build();
     }
 
     @Override
     public Simulacao toDTO(SimulacaoEmprestimo data) {
-        return null;
+        return Simulacao.builder()
+                .quantidadeMeses(data.getQuantidadeMeses())
+                .primeiroVencimento(data.getPrimeiroVencimento())
+                .valorEmprestimo(data.getValorEmprestimo())
+                .taxaJurosMes(data.getTaxaJurosMes())
+                .build();
     }
 }

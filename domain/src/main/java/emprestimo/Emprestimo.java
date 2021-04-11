@@ -19,13 +19,13 @@ public final class Emprestimo {
     private final List<Encargo> encargos = new ArrayList<>();
     private final List<Parcela> parcelas = new ArrayList<>();
     private BigDecimal valorSolicitado;
-    private Integer prazo;
+    private Integer quantidadeMeses;
     private BigDecimal valorTotal;
     private BigDecimal valorJuros;
 
-    public Emprestimo(BigDecimal valor, Integer prazo) {
+    public Emprestimo(BigDecimal valor, Integer quantidadeMeses) {
         this.valorSolicitado = valor;
-        this.prazo = prazo;
+        this.quantidadeMeses = quantidadeMeses;
     }
 
     public Emprestimo addEncargos(List<Encargo> encargos) {

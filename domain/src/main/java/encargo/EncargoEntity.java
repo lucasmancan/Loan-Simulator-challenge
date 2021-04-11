@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class EncargoEntity {
     private EncargoTipo tipo;
-    private BigDecimal valorFixo;
-    private BigDecimal valorRecorrente;
+    private BigDecimal valorPorcentagemFixa;
+    private BigDecimal valorPorcentagemRecorrente;
     private FrequenciaRecorrencia frequenciaRecorrencia;
 }
