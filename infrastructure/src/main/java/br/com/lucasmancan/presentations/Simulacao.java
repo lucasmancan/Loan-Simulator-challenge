@@ -20,8 +20,8 @@ public final class Simulacao {
     private LocalDate primeiroVencimento;
 
     @NotNull(message = "Taxa de juros é obrigatória.")
-    @DecimalMin(value = "0.001", message = "Taxa de juros é mínima é 0.01%")
-    @DecimalMax(value = "1.000", message = "Taxa de juros máxima é 100%")
+    @DecimalMin(value = "0.01", message = "Taxa de juros é mínima é 0.01%")
+    @DecimalMax(value = "100.00", message = "Taxa de juros máxima é 100%")
     private BigDecimal taxaJurosMes;
 
     @NotNull(message = "Valor de simulação do emprestimo é obrigatório.")

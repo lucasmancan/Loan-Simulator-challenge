@@ -35,7 +35,7 @@ class InfrastructureTest {
         SimulacaoEmprestimo simulacaoEmprestimo = SimulacaoEmprestimo.builder()
                 .quantidadeMeses(12)
                 .primeiroVencimento(LocalDate.now().plusMonths(1))
-                .taxaJurosMes(new BigDecimal("0.01"))
+                .taxaJurosMes(new BigDecimal("1"))
                 .valorEmprestimo(new BigDecimal(10000))
                 .build();
 

@@ -29,7 +29,7 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
     @Override
     public List<Parcela> gerarParcelas(SimulacaoEmprestimo simulacaoEmprestimo) {
         BigDecimal valorFixoPagamento = calcularValorParcela(simulacaoEmprestimo.getValorEmprestimo(),
-                simulacaoEmprestimo.getTaxaJurosMes(),
+                simulacaoEmprestimo.getTaxaJurosMes().divide(BigDecimal.valueOf(100)),
                 simulacaoEmprestimo.getQuantidadeMeses());
 
         var parcelas = new ArrayList<Parcela>();
@@ -67,6 +67,7 @@ public class GeradorParcelasModeloPrice implements GeradorParcelas {
     }
 
     private BigDecimal calcularValorJuros(BigDecimal taxaDeJuros, BigDecimal valorDevido) {
-        return valorDevido.multiply(taxaDeJuros);
+        return valorDevido.multiply(taxaDeJuros
+                                    .divide(BigDecimal.valueOf(100)));
     }
 }
