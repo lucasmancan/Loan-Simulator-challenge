@@ -29,7 +29,7 @@ public class ApuradorEncargoImpl implements ApuradorEncargo {
 
             BigDecimal valorFixo = simulacaoEmprestimo
                     .getValorEmprestimo()
-                    .multiply(encargoEntity.getValorPorcentagemFixa().divide(BigDecimal.valueOf(100L)));
+                    .multiply(encargoEntity.getValorPorcentagemFixa().divide(new BigDecimal("100")));
 
             long diferencaEntreDatas = calcularDiferencaEntreDatas(simulacaoEmprestimo.getPrimeiroVencimento(),
                     simulacaoEmprestimo.getQuantidadeMeses(),
@@ -37,7 +37,7 @@ public class ApuradorEncargoImpl implements ApuradorEncargo {
 
             BigDecimal valorTotalRecorrente = encargoEntity.getValorPorcentagemRecorrente()
                     .multiply(BigDecimal.valueOf(diferencaEntreDatas))
-                    .divide(new BigDecimal(100))
+                    .divide(new BigDecimal("100"))
                     .multiply(simulacaoEmprestimo.getValorEmprestimo());
 
             encargos.add(Encargo.builder()
